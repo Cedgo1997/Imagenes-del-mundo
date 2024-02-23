@@ -80,16 +80,25 @@ export default {
         const payload = {
           status: 'open',
           numberTemplate: {
-            id: 0
+            number: 0
           },
-          items: [],
+          items: [
+            {
+              id: 1,
+              name: "Image 1",
+              description: "This is an image",
+              quantity: 1,
+              price: 120
+            }
+          ],
           seller: {
-            id: event.sellerId,
+            id: 1,
+            name: "Seller name"
           },
           date: Date().toISOString().split('T')[0],
           dueDate: new Date().toISOString().split('T')[0],
           client: {
-            id: 7
+            id: 1
           }
         }
         await createInvoice({ ...payload });
