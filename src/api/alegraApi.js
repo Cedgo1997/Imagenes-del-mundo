@@ -1,14 +1,18 @@
 import axios from "axios";
 
+const apiKey = btoa(
+    `${process.env.VUE_APP_ALEGRA_USERNAME}:${process.env.VUE_APP_ALEGRA_TOKEN}`
+);
+
 const alegraApi = () =>
     axios.create({
         baseURL: process.env.VUE_APP_ALEGRA_URL,
         params: {
             limit: 4,
-            status: 'active',
+            status: "active",
         },
         headers: {
-            Authorization: process.env.VUE_APP_ALEGRA_API_TOKEN,
+            Authorization: `Basic ${apiKey}`,
         },
     });
 
