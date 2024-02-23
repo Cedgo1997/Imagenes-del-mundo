@@ -1,18 +1,16 @@
 <template>
   <div class="search">
-    <SearchComponentVue />
+    <SearchComponent />
   </div>
 </template>
 
 
 <script>
-import SearchComponentVue from '@/components/SearchComponent.vue'
-
-
+import SearchComponent from '@/components/SearchComponent'
 
 export default {
   components: {
-    SearchComponentVue
-  }
+    SearchComponent
+  },
 }
 </script>

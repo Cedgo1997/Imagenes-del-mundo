@@ -1,8 +1,5 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/search">Search</router-link>
-  </nav>
+  <NavbarComponent />
   <router-view />
   <FooterComponent />
 </template>
@@ -11,10 +8,12 @@
 <script>
 
 import FooterComponent from './components/FooterComponent';
+import NavbarComponent from './components/NavbarComponent';
 export default {
   name: 'App',
   components: {
-    FooterComponent
+    FooterComponent,
+    NavbarComponent
   }
 }
 </script>
@@ -36,10 +35,10 @@ nav {
   a {
     font-weight: bold;
     color: #2c3e50;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  .router-link-exact-active {
+    color: #0462CDff
   }
 }
 </style>

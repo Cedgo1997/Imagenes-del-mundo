@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home__image-container">
-      <img src="./../assets//search-dude.png" alt="">
+      <img src="./../assets/search-cat.png" alt="">
     </div>
     <div class="hero">
       <h1 class="hero__title">¡Encuentra la imagen perfecta!</h1>
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
   name: 'HomeView',
 }
@@ -25,7 +23,7 @@ export default {
   display: flex;
   background-color: #f0f0f0;
   padding: 100px 0;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -35,19 +33,19 @@ export default {
 }
 
 .hero__title {
-  font-size: 36px;
+  font-size: 42px;
   color: #333;
 }
 
 .hero__description {
-  font-size: 18px;
+  font-size: 21px;
   color: #666;
   margin-bottom: 30px;
 }
 
 .hero__cta {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #7EB2EDff;
   color: #fff;
   font-size: 18px;
   padding: 10px 20px;

@@ -1,7 +1,12 @@
 <template>
   <SearchbarComponent @queryText="getSellersWithImages" />
+  <p class="result-query" v-if="searchText">Estos son los resultados para la búsqueda de: <strong>{{ searchText
+  }}</strong></p>
   <div class="card-container" v-if="sellersInfo.length">
     <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" />
+  </div>
+  <div v-else>
+    <img src="./../assets/search-zoom.png" alt="Zoom image">
   </div>
 </template>
 
@@ -18,13 +23,15 @@ export default {
   },
   data() {
     return {
-      sellersInfo: []
+      sellersInfo: [],
+      searchText: ''
     }
   },
   methods: {
     async getSellersWithImages(query) {
       try {
         if (query) {
+          this.searchText = query;
           const sellers = await getAllSellers();
           const images = await getImagesByText(query, 4);
           console.log(sellers)
@@ -44,10 +51,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.result-query {
+  font-size: 24px;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  padding: 10px;
 }
 </style>

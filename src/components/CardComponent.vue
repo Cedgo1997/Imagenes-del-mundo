@@ -120,7 +120,7 @@ export default {
             polygon(0 0, 100% 0, 100% calc(100% - var(--f)), calc(100% - var(--f)) 100%,
                 calc(100% - var(--f)) calc(100% - var(--f)), 0 calc(100% - var(--f)),
                 var(--r) calc(50% - var(--f)/2));
-        background-color: #9babfe;
+        background-color: #7EB2EDff;
         box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
         color: whitesmoke;
     }
@@ -152,7 +152,7 @@ export default {
         transition: color 100ms ease-in;
 
         &:hover {
-            color: #9babfe;
+            color: #7EB2EDff;
         }
     }
 }

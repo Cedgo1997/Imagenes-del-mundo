@@ -23,7 +23,6 @@ export default {
         sendText() {
             if (this.searchTerm.trim()) {
                 this.$emit('queryText', this.searchTerm);
-                console.log(this.searchTerm)
                 this.searchTerm = '';
             }
         }
@@ -47,10 +46,10 @@ export default {
         height: inherit;
         border-radius: 10px;
         padding: 0 40px;
-        caret-color: #9babfe;
+        caret-color: #7EB2EDff;
 
         &:focus {
-            outline: 2px solid #9babfe;
+            outline: 2px solid #7EB2EDff;
             border: none;
         }
     }
@@ -69,7 +68,7 @@ export default {
         cursor: pointer;
 
         &:hover {
-            color: #9babfe;
+            color: #7EB2EDff;
         }
     }
 }
