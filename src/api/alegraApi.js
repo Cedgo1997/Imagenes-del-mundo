@@ -4,12 +4,12 @@ const apiKey = btoa(
     `${process.env.VUE_APP_ALEGRA_USERNAME}:${process.env.VUE_APP_ALEGRA_TOKEN}`
 );
 
-const alegraApi = () =>
+const alegraApi = (limit, status) =>
     axios.create({
         baseURL: process.env.VUE_APP_ALEGRA_URL,
         params: {
-            limit: 4,
-            status: "active",
+            limit,
+            status,
         },
         headers: {
             Authorization: `Basic ${apiKey}`,

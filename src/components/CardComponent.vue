@@ -67,8 +67,8 @@ export default {
             localStorage.setItem('currentScore', JSON.stringify(currentScore));
             if (this.score >= 20) {
                 this.$emit('gameOver', {
-                    winnerId: this.seller.id,
-                    localStorageData: currentScore
+                    sellerId: this.seller.id,
+                    scoreData: currentScore
                 });
                 localStorage.removeItem('currentScore');
             }

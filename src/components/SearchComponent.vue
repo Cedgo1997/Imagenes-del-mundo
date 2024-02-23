@@ -3,7 +3,7 @@
   <p class="result-query" v-if="searchText">Estos son los resultados para la búsqueda de: <strong>{{ searchText
   }}</strong></p>
   <div class="card-container" v-if="sellersInfo.length">
-    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" />
+    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" @gameOver="handleSellerWin" />
   </div>
   <div class="image-placeholder-container" v-else>
     <img src="./../assets/search-zoom.png" alt="Zoom image">
@@ -16,6 +16,7 @@ import CardComponent from './CardComponent'
 import SearchbarComponent from './SearchbarComponent'
 import getImagesByText from '@/helpers/pexels/getPexelsImages';
 import getAllSellers from '@/helpers/alegra/getAllSellers';
+import createInvoice from '@/helpers/alegra/createInvoice';
 
 export default {
   components: {
@@ -46,6 +47,24 @@ export default {
         console.error(error);
       }
     },
+    async handleSellerWin(event) {
+      const payload = {
+        status: 'open',
+        numberTemplate: {
+          id: 0
+        },
+        items: [],
+        seller: {
+          id: event.sellerId,
+        },
+        date: new Date(),
+        dueDate: new Date(),
+        client: {
+          id: 7
+        }
+      }
+      console.log(await createInvoice({ ...payload }))
+    }
   },
 }
 </script>
