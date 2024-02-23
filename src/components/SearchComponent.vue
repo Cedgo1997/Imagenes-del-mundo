@@ -75,6 +75,7 @@ export default {
     },
     async handleSellerWin(event) {
       this.dialogOpen = true;
+      console.info("Winner: ", event);
 
       try {
         const payload = {
