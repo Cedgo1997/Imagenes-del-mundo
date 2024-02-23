@@ -103,7 +103,7 @@ export default {
             id: 1
           }
         }
-        await createInvoice({ ...payload });
+        await createInvoice(payload);
       } catch (error) {
         console.error(error)
       }
