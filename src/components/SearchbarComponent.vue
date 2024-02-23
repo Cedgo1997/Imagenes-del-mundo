@@ -38,7 +38,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin: 20px auto;
+    margin: 35px auto;
 
     &__field {
         border: 1px solid black;

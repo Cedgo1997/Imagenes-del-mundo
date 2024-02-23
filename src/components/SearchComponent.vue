@@ -5,8 +5,9 @@
   <div class="card-container" v-if="sellersInfo.length">
     <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" />
   </div>
-  <div v-else>
+  <div class="image-placeholder-container" v-else>
     <img src="./../assets/search-zoom.png" alt="Zoom image">
+    <strong>¡Comienza tu búsqueda y elige las mejores imágenes!</strong>
   </div>
 </template>
 
@@ -34,7 +35,6 @@ export default {
           this.searchText = query;
           const sellers = await getAllSellers();
           const images = await getImagesByText(query, 4);
-          console.log(sellers)
           this.sellersInfo = sellers.map(
             (seller, index) => ({
               ...seller,
@@ -61,5 +61,14 @@ export default {
   justify-content: center;
   gap: 10px;
   padding: 10px;
+}
+
+.image-placeholder-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  font-size: 32px;
 }
 </style>

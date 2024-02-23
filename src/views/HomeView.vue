@@ -21,10 +21,22 @@ export default {
 <style lang="scss" scoped>
 .home {
   display: flex;
+  flex-direction: row-reverse;
   background-color: #f0f0f0;
   padding: 100px 0;
   justify-content: space-evenly;
   align-items: center;
+
+  &__image-container {
+    max-width: 50%;
+    max-height: 60%;
+    flex: 1 1 220px;
+    margin-bottom: 20px;
+  }
+}
+
+img {
+  max-width: 100%;
 }
 
 .hero {
@@ -56,5 +68,29 @@ export default {
 
 .hero__cta:hover {
   background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+  .home {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home__image-container {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .hero {
+    max-width: 100%;
+  }
+
+  .hero__title {
+    font-size: 28px;
+  }
+
+  .hero__description {
+    font-size: 16px;
+  }
 }
 </style>

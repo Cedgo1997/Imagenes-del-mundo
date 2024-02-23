@@ -18,9 +18,11 @@
         </transition>
 
         <div class="buttons">
-            <IconHeart @click="liked = !liked" v-show="!liked" class="btn heart-icon" :size="30" />
-            <IconHeartFilled @click="liked = !liked" v-show="liked" class="btn heart-filled-icon" :size="30" />
-            <IconDownload class="btn download-icon" :size="30" />
+            <IconHeart @click="likeCard" v-show="!liked" class="btn heart-icon" :size="30" />
+            <IconHeartFilled @click="likeCard" v-show="liked" class="btn heart-filled-icon" :size="30" />
+            <a class="download-button" :href="seller.image.src.original" target="_blank" download>
+                <IconDownload class="btn download-icon" :size="30" />
+            </a>
         </div>
     </div>
 </template>
@@ -50,17 +52,32 @@ export default {
     methods: {
         toggleLike() {
             this.showLike = !this.showLike;
-            this.liked = true;
+            if (!this.liked) {
+                this.likeCard();
+            }
             setTimeout(() => {
                 this.showLike = !this.showLike;
             }, 800);
+        },
+        likeCard() {
+            this.liked = !this.liked;
+            this.score += this.liked ? 3 : -3;
+            const currentScore = JSON.parse(localStorage.getItem('currentScore')) || {};
+            currentScore[this.seller.id] = this.score;
+            localStorage.setItem('currentScore', JSON.stringify(currentScore));
+            if (this.score >= 20) {
+                this.$emit('gameOver', {
+                    winnerId: this.seller.id,
+                    localStorageData: currentScore
+                });
+                localStorage.removeItem('currentScore');
+            }
         }
     },
     mounted() {
         this.$refs.image.addEventListener("dblclick", this.toggleLike);
-    },
-    created() {
-        this.score = Number(this.seller.observations)
+        const currentScore = JSON.parse(localStorage.getItem('currentScore')) || {};
+        this.score = currentScore[this.seller.id] || 0;
     },
     beforeUnmount() {
         this.$refs.image.removeEventListener("dblclick", this.toggleLike);
@@ -148,11 +165,16 @@ export default {
         color: red;
     }
 
-    .download-icon {
-        transition: color 100ms ease-in;
+    .download-button {
+        text-decoration: none;
+        color: inherit;
 
-        &:hover {
-            color: #7EB2EDff;
+        .download-icon {
+            transition: color 100ms ease-in;
+
+            &:hover {
+                color: #7EB2EDff;
+            }
         }
     }
 }
@@ -169,6 +191,8 @@ export default {
     .image {
         height: 350px;
         width: 100%;
+        user-select: none;
+        -webkit-user-drag: none;
     }
 }
 
