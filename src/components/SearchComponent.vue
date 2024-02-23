@@ -78,6 +78,7 @@ export default {
       console.info("Winner: ", event);
 
       try {
+        const date = new Date();
         const payload = {
           status: 'open',
           numberTemplate: {
@@ -96,8 +97,8 @@ export default {
             id: 1,
             name: "Seller name"
           },
-          date: Date().toISOString().split('T')[0],
-          dueDate: new Date().toISOString().split('T')[0],
+          date: date.toISOString().split('T')[0],
+          dueDate: date.toISOString().split('T')[0],
           client: {
             id: 1
           }
