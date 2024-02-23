@@ -1,23 +1,26 @@
 <template>
     <div class="card fade-in">
+        <div class="ribbon">Score: {{ score }}/20</div>
         <div class="card__top">
             <div class="user">
-                <img class="user__profile-picture" src="https://placehold.co/40" alt="user-picture">
-                <h3>Cesar Gonzalez</h3>
+                <img class="user__profile-picture"
+                     :src="`https://i.pravatar.cc/40?u=${seller.name.replace(' ', '').toLowerCase()}`" alt="user-picture">
+                <h3>{{ seller.name }}</h3>
             </div>
         </div>
 
         <figure class="image-container" ref="image">
-            <img class="image fade-in" :src="image.src.original" :alt="image.alt">
+            <img class="image fade-in" :src="seller.image.src.original" :alt="seller.image.alt">
         </figure>
 
         <transition name="like">
-            <IconHeartFilled v-show="liked" :size="60" class="like-icon" />
+            <IconHeartFilled v-show="showLike" :size="60" class="like-icon" />
         </transition>
 
         <div class="buttons">
-            <IconHeart class="btn" :size="30" @click="toggleLike" />
-            <IconDownload class="btn" :size="30" />
+            <IconHeart @click="liked = !liked" v-show="!liked" class="btn heart-icon" :size="30" />
+            <IconHeartFilled @click="liked = !liked" v-show="liked" class="btn heart-filled-icon" :size="30" />
+            <IconDownload class="btn download-icon" :size="30" />
         </div>
     </div>
 </template>
@@ -32,26 +35,32 @@ export default {
         IconDownload
     },
     props: {
-        image: {
+        seller: {
             type: Object,
             required: true
         }
     },
     data() {
         return {
-            liked: false
+            liked: false,
+            showLike: false,
+            score: 0
         }
     },
     methods: {
         toggleLike() {
-            this.liked = !this.liked;
+            this.showLike = !this.showLike;
+            this.liked = true;
             setTimeout(() => {
-                this.liked = !this.liked;
+                this.showLike = !this.showLike;
             }, 800);
         }
     },
     mounted() {
         this.$refs.image.addEventListener("dblclick", this.toggleLike);
+    },
+    created() {
+        this.score = Number(this.seller.observations)
     },
     beforeUnmount() {
         this.$refs.image.removeEventListener("dblclick", this.toggleLike);
@@ -76,7 +85,7 @@ export default {
 
     &:hover {
         transform: scale(1.1);
-        transform: translateY(-10px);
+        transform: translateY(-1px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
@@ -99,6 +108,22 @@ export default {
             }
         }
     }
+
+    .ribbon {
+        --f: 10px;
+        --r: 15px;
+        --t: 10px;
+        position: absolute;
+        inset: var(--t) calc(-1*var(--f)) auto auto;
+        padding: 0 10px var(--f) calc(10px + var(--r));
+        clip-path:
+            polygon(0 0, 100% 0, 100% calc(100% - var(--f)), calc(100% - var(--f)) 100%,
+                calc(100% - var(--f)) calc(100% - var(--f)), 0 calc(100% - var(--f)),
+                var(--r) calc(50% - var(--f)/2));
+        background-color: #9babfe;
+        box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
+        color: whitesmoke;
+    }
 }
 
 .buttons {
@@ -108,6 +133,27 @@ export default {
 
     .btn {
         cursor: pointer;
+    }
+
+    .heart-icon {
+        scale: 1;
+        transition: scale 100ms ease-in;
+
+        &:hover {
+            scale: 1.1;
+        }
+    }
+
+    .heart-filled-icon {
+        color: red;
+    }
+
+    .download-icon {
+        transition: color 100ms ease-in;
+
+        &:hover {
+            color: #9babfe;
+        }
     }
 }
 

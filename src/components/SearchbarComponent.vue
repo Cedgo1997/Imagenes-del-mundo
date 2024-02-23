@@ -2,7 +2,7 @@
     <div class="searchbar">
         <IconSearch class="btn btn-left" :size="30" />
         <input class="searchbar__field" type="text" v-model="searchTerm" @keypress.enter="sendText">
-        <IconX class="btn btn-right" :size="30" />
+        <IconX class="btn btn-right" :size="30" @click="searchTerm = ''" />
     </div>
 </template>
 

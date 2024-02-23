@@ -1,8 +1,7 @@
 <template>
-  <h1>World Images</h1>
-  <SearchbarComponent @queryText="getImages" />
-  <div class="card-container" v-if="images.length">
-    <CardComponent v-for="image in images" :image="image" :key="image.id" />
+  <SearchbarComponent @queryText="getSellersWithImages" />
+  <div class="card-container" v-if="sellersInfo.length">
+    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" />
   </div>
 </template>
 
@@ -10,6 +9,7 @@
 import CardComponent from './CardComponent'
 import SearchbarComponent from './SearchbarComponent'
 import getImagesByText from '@/helpers/pexels/getPexelsImages';
+import getAllSellers from '@/helpers/alegra/getAllSellers';
 
 export default {
   components: {
@@ -18,20 +18,27 @@ export default {
   },
   data() {
     return {
-      images: []
+      sellersInfo: []
     }
   },
   methods: {
-    async getImages(query) {
+    async getSellersWithImages(query) {
       try {
         if (query) {
+          const sellers = await getAllSellers();
           const images = await getImagesByText(query, 4);
-          this.images = images;
+          console.log(sellers)
+          this.sellersInfo = sellers.map(
+            (seller, index) => ({
+              ...seller,
+              image: images[index]
+            })
+          )
         }
       } catch (error) {
         console.error(error);
       }
-    }
+    },
   },
 }
 </script>
