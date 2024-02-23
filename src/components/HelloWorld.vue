@@ -1,8 +1,6 @@
 <template>
   <h1>World Images</h1>
-  <!-- Searchbar -->
   <SearchbarComponent @queryText="getImages" />
-  <!-- Sellers Component -->
   <div class="card-container" v-if="images.length">
     <CardComponent v-for="image in images" :image="image" :key="image.id" />
   </div>
