@@ -2,9 +2,13 @@
   <SearchbarComponent @queryText="getSellersWithImages" />
   <p class="result-query" v-if="searchText">Estos son los resultados para la búsqueda de: <strong>{{ searchText
   }}</strong></p>
+
   <div class="card-container" v-if="sellersInfo.length">
-    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.id" @gameOver="handleSellerWin" />
+    <TransitionGroup name="fade">
+      <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.id" @gameOver="handleSellerWin" />
+    </TransitionGroup>
   </div>
+
   <div class="image-placeholder-container" v-else>
     <img src="./../assets/search-zoom.png" alt="Zoom image">
     <strong>¡Comienza tu búsqueda y elige las mejores imágenes!</strong>
@@ -25,11 +29,13 @@ import SearchbarComponent from './SearchbarComponent'
 import getImagesByText from '@/helpers/pexels/getPexelsImages';
 import getAllSellers from '@/helpers/alegra/getAllSellers';
 import createInvoice from '@/helpers/alegra/createInvoice';
+import { TransitionGroup } from 'vue';
 
 export default {
   components: {
     CardComponent,
     SearchbarComponent,
+    TransitionGroup
   },
   data() {
     return {
@@ -83,7 +89,7 @@ export default {
       this.dialogOpen = false;
       this.$router.push('/');
     }
-  },
+  }
 }
 </script>
 

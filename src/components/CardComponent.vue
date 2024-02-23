@@ -1,5 +1,5 @@
 <template>
-    <div class="card fade-in">
+    <div class="card" v-if="seller">
         <div class="ribbon">Score: {{ score }}/20</div>
         <div class="card__top">
             <div class="user">
@@ -81,6 +81,11 @@ export default {
     },
     beforeUnmount() {
         this.$refs.image.removeEventListener("dblclick", this.toggleLike);
+    },
+    watch: {
+        seller(newSeller) {
+            if (newSeller) this.liked = false;
+        }
     }
 }
 </script>

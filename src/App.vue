@@ -1,6 +1,8 @@
 <template>
   <NavbarComponent />
-  <router-view />
+  <Transition name="fade">
+    <router-view />
+  </Transition>
   <FooterComponent />
 </template>
 
@@ -40,5 +42,20 @@ nav {
   .router-link-exact-active {
     color: #0462CDff
   }
+}
+
+.fade-leave-to,
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-leave-from,
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-leave-active,
+.fade-enter-active {
+  transition: opacity 0.5s;
 }
 </style>
