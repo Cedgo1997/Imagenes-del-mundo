@@ -10,7 +10,8 @@
         </div>
 
         <figure class="image-container" ref="image">
-            <img class="image fade-in" :src="seller.image.src.original" :alt="seller.image.alt">
+            <img class="image fade-in" :src="seller.image?.src.original || 'https://placehold.co/350'"
+                 :alt="seller.image?.alt || 'No images'">
         </figure>
 
         <transition name="like">
@@ -20,7 +21,7 @@
         <div class="buttons">
             <IconHeart @click="likeCard" v-show="!liked" class="btn heart-icon" :size="30" />
             <IconHeartFilled @click="likeCard" v-show="liked" class="btn heart-filled-icon" :size="30" />
-            <a class="download-button" :href="seller.image.src.original" target="_blank" download>
+            <a class="download-button" :href="seller.image?.src.original || null" target="_blank" download>
                 <IconDownload class="btn download-icon" :size="30" />
             </a>
         </div>
@@ -51,26 +52,31 @@ export default {
     },
     methods: {
         toggleLike() {
-            this.showLike = !this.showLike;
-            if (!this.liked) {
-                this.likeCard();
-            }
-            setTimeout(() => {
+            if (this.seller.image) {
+
                 this.showLike = !this.showLike;
-            }, 800);
+                if (!this.liked) {
+                    this.likeCard();
+                }
+                setTimeout(() => {
+                    this.showLike = !this.showLike;
+                }, 800);
+            }
         },
         likeCard() {
-            this.liked = !this.liked;
-            this.score += this.liked ? 3 : -3;
-            const currentScore = JSON.parse(localStorage.getItem('currentScore')) || {};
-            currentScore[this.seller.id] = this.score;
-            localStorage.setItem('currentScore', JSON.stringify(currentScore));
-            if (this.score >= 20) {
-                this.$emit('gameOver', {
-                    sellerId: this.seller.id,
-                    scoreData: currentScore
-                });
-                localStorage.removeItem('currentScore');
+            if (this.seller.image) {
+                this.liked = !this.liked;
+                this.score += this.liked ? 3 : -3;
+                const currentScore = JSON.parse(localStorage.getItem('currentScore')) || {};
+                currentScore[this.seller.id] = this.score;
+                localStorage.setItem('currentScore', JSON.stringify(currentScore));
+                if (this.score >= 20) {
+                    this.$emit('gameOver', {
+                        sellerId: this.seller.id,
+                        scoreData: currentScore
+                    });
+                    localStorage.removeItem('currentScore');
+                }
             }
         }
     },

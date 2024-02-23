@@ -4,23 +4,27 @@
   }}</strong></p>
 
   <div class="card-container" v-if="sellersInfo.length">
-    <TransitionGroup name="fade">
+    <TransitionGroup name="fade" v-if="!loading">
       <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.id" @gameOver="handleSellerWin" />
     </TransitionGroup>
   </div>
 
-  <div class="image-placeholder-container" v-else>
+  <div class="image-placeholder-container" v-else-if="!loading">
     <img src="./../assets/search-zoom.png" alt="Zoom image">
     <strong>¡Comienza tu búsqueda y elige las mejores imágenes!</strong>
-
-    <dialog class="final-modal" v-if="dialogOpen">
-      <div class="modal-content">
-        <h2 class="modal-title">¡Felicidades!</h2>
-        <p class="modal-text">Se ha terminado el juego. ¿Deseas empezar de nuevo?</p>
-        <button class="accept-button" @click="startAgain">Aceptar</button>
-      </div>
-    </dialog>
   </div>
+
+  <div class="loader-container" v-if="loading">
+    <IconLoader2 class="loader-icon" :size="80"></IconLoader2>
+  </div>
+
+  <dialog class="final-modal" v-if="dialogOpen">
+    <div class="modal-content">
+      <h2 class="modal-title">¡Felicidades!</h2>
+      <p class="modal-text">Se ha terminado el juego. ¿Deseas empezar de nuevo?</p>
+      <button class="accept-button" @click="startAgain">Aceptar</button>
+    </div>
+  </dialog>
 </template>
 
 <script>
@@ -30,22 +34,26 @@ import getImagesByText from '@/helpers/pexels/getPexelsImages';
 import getAllSellers from '@/helpers/alegra/getAllSellers';
 import createInvoice from '@/helpers/alegra/createInvoice';
 import { TransitionGroup } from 'vue';
+import { IconLoader2 } from '@tabler/icons-vue';
 
 export default {
   components: {
     CardComponent,
     SearchbarComponent,
-    TransitionGroup
+    TransitionGroup,
+    IconLoader2
   },
   data() {
     return {
       sellersInfo: [],
       searchText: '',
-      dialogOpen: false
+      dialogOpen: false,
+      loading: false
     }
   },
   methods: {
     async getSellersWithImages(query) {
+      this.loading = true;
       try {
         if (query) {
           this.searchText = query;
@@ -56,9 +64,12 @@ export default {
               ...seller,
               image: images[index]
             })
-          )
+          );
+          this.loading = false;
+
         }
       } catch (error) {
+        this.loading = false;
         console.error(error);
       }
     },
@@ -159,5 +170,27 @@ export default {
 
 .accept-button:hover {
   background-color: #0056b3;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loader-icon {
+  animation: spin 1s infinite linear;
+  color: #7EB2ED;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
