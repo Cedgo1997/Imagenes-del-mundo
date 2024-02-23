@@ -1,17 +1,62 @@
 <template>
   <div class="home">
-    <HelloWorld />
+    <div class="home__image-container">
+      <img src="./../assets//search-dude.png" alt="">
+    </div>
+    <div class="hero">
+      <h1 class="hero__title">¡Encuentra la imagen perfecta!</h1>
+      <p class="hero__description">Explora nuestra colección de imágenes únicas y elige la que mejor se adapte a tus
+        necesidades.</p>
+      <router-link to="/search" class="hero__cta">Comenzar ahora</router-link>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'HomeView',
-  components: {
-    HelloWorld
-  }
 }
 </script>
+
+<style lang="scss" scoped>
+.home {
+  display: flex;
+  background-color: #f0f0f0;
+  padding: 100px 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hero {
+  max-width: 500px;
+  text-align: center;
+}
+
+.hero__title {
+  font-size: 36px;
+  color: #333;
+}
+
+.hero__description {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.hero__cta {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero__cta:hover {
+  background-color: #0056b3;
+}
+</style>

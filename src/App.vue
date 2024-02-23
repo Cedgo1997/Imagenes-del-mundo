@@ -1,16 +1,31 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/search">Search</router-link>
   </nav>
-  <router-view/>
+  <router-view />
+  <FooterComponent />
 </template>
+
+
+<script>
+
+import FooterComponent from './components/FooterComponent';
+export default {
+  name: 'App',
+  components: {
+    FooterComponent
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  position: relative;
   text-align: center;
   color: #2c3e50;
 }

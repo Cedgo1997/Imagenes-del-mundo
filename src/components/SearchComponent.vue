@@ -14,7 +14,7 @@ import getAllSellers from '@/helpers/alegra/getAllSellers';
 export default {
   components: {
     CardComponent,
-    SearchbarComponent
+    SearchbarComponent,
   },
   data() {
     return {
