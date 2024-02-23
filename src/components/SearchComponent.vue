@@ -3,7 +3,7 @@
   <p class="result-query" v-if="searchText">Estos son los resultados para la búsqueda de: <strong>{{ searchText
   }}</strong></p>
   <div class="card-container" v-if="sellersInfo.length">
-    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.image.id" @gameOver="handleSellerWin" />
+    <CardComponent v-for="seller in sellersInfo" :seller="seller" :key="seller.id" @gameOver="handleSellerWin" />
   </div>
   <div class="image-placeholder-container" v-else>
     <img src="./../assets/search-zoom.png" alt="Zoom image">
