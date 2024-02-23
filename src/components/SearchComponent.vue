@@ -14,14 +14,14 @@
     <strong>¡Comienza tu búsqueda y elige las mejores imágenes!</strong>
   </div>
 
-  <div class="loader-container" v-if="loading">
+  <div class="loader-container" v-if="loading" :open="dialogOpen">
     <IconLoader2 class="loader-icon" :size="80"></IconLoader2>
   </div>
 
   <dialog class="final-modal" v-if="dialogOpen">
     <div class="modal-content">
       <h2 class="modal-title">¡Felicidades!</h2>
-      <p class="modal-text">Se ha terminado el juego. ¿Deseas empezar de nuevo?</p>
+      <p class="modal-text">Se ha escogido un ganador</p>
       <button class="accept-button" @click="startAgain">Aceptar</button>
     </div>
   </dialog>
@@ -74,6 +74,8 @@ export default {
       }
     },
     async handleSellerWin(event) {
+      this.dialogOpen = true;
+
       try {
         const payload = {
           status: 'open',
@@ -84,14 +86,13 @@ export default {
           seller: {
             id: event.sellerId,
           },
-          date: new Date(),
-          dueDate: new Date(),
+          date: Date().toISOString().split('T')[0],
+          dueDate: new Date().toISOString().split('T')[0],
           client: {
             id: 7
           }
         }
         await createInvoice({ ...payload });
-        this.dialogOpen = true;
       } catch (error) {
         console.error(error)
       }
